@@ -101,4 +101,25 @@ export class AppComponent implements OnInit{
       })
     );
   }
+  
+  deleteServer(server: Server): void {
+    this.appState$ = this.serverSvc.delete$(server.id)
+    .pipe(
+      map(response => {
+        const updatedServers: CustomResponse = {
+          ...response,
+          data: {servers: this.dataSubject.value.data.servers.filter(s => s.id !== server.id)}
+        }
+        this.dataSubject.next(updatedServers);
+        return { dataState: DataState.LOADED_STATE, appData: updatedServers }
+      }),
+
+      startWith({ dataState: DataState.LOADED_STATE, appData: this.dataSubject.value }),
+
+      catchError((error: string) => {
+        this.isSavingServer.next(false);
+        return of({ dataState: DataState.ERROR_STATE, error: error })
+      })
+    );
+  }
 }
