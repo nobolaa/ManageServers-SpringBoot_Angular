@@ -7,7 +7,6 @@ import { AppState } from './interface/app-state.interface';
 import { CustomResponse } from './interface/custom-response.interface';
 import { Server } from './interface/server.interface';
 import { ServerService } from './service/server.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,7 +22,7 @@ export class AppComponent implements OnInit{
   private isSavingServer = new BehaviorSubject<boolean>(false);
   isSavingServerStatus$ = this.isSavingServer.asObservable();
 
-  constructor(private serverSvc: ServerService){}
+  constructor(private serverSvc: ServerService,  private notifier: NotificationService){}
 
   ngOnInit(): void {
     this.appState$ = this.serverSvc.servers$
@@ -121,5 +120,17 @@ export class AppComponent implements OnInit{
         return of({ dataState: DataState.ERROR_STATE, error: error })
       })
     );
+  }
+
+  printReport(): void {
+    let dataType = 'application/vnd.ms-excel.sheet.macroEnabled.12';
+    let tableSelect = document.getElementById('servers');
+    let tableHtml = tableSelect.outerHTML.replace(/ /g, '%20');
+    let downloadLink = document.createElement('a');
+    document.body.appendChild(downloadLink);
+    downloadLink.href = 'data:' + dataType + ', ' + tableHtml;
+    downloadLink.download = 'server-report.xls';
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   }
 }
