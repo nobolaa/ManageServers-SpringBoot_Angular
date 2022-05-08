@@ -15,7 +15,7 @@
                       </a>
 
                       <span>
-                          <select name="status" class="btn btn-info" style="height: 32.91px;">
+                          <select (ngModelChange)="filterServers($event)" ngModel="ALL" name="status" class="btn btn-info" style="height: 32.91px;">
                               <option value="ALL">ALL</option>
                               <option value="SERVER_UP">SERVER UP</option>
                               <option value="SERVER_DOWN">SERVER DOWN</option>
