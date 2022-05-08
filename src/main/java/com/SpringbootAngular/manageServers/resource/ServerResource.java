@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static java.time.LocalDateTime.now;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -26,7 +27,8 @@ public class ServerResource {
     private final ServerServiceImpl serverService;
 
     @GetMapping
-    public ResponseEntity<Response> getServers() {
+    public ResponseEntity<Response> getServers() throws InterruptedException {
+        TimeUnit.MILLISECONDS.sleep(500);
         return ResponseEntity.ok(
                 Response.builder()
                         .timestamp(now())

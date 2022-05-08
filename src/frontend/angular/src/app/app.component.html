@@ -59,8 +59,10 @@
                               </td>
                               <td>
                                   <a style="cursor: pointer;">
-                                      <i class="material-icons" title="Ping server">&#xe328;</i>
+                                      <i *ngIf="(filterStatus$ | async) === '' || (filterStatus$ | async) !== server.ipAddress; else pinging" class="material-icons" title="Ping server">&#xe328;</i>
+                                      <ng-template #pinging>
                                       <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                      </ng-template>
                                   </a>
                               </td>
                               <td>
@@ -75,7 +77,7 @@
               </ng-container>
               <ng-container *ngSwitchCase="DataState.ERROR_STATE">
                   <div class="alert-danger">
-                    error
+                    {{ appState.error }}
                   </div>
               </ng-container>
           </ng-container>
