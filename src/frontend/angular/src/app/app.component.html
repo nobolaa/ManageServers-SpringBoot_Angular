@@ -59,7 +59,7 @@
                               </td>
                               <td>
                                   <a style="cursor: pointer;">
-                                      <i *ngIf="(filterStatus$ | async) === '' || (filterStatus$ | async) !== server.ipAddress; else pinging" class="material-icons" title="Ping server">&#xe328;</i>
+                                      <i (click)="pingServer(server.ipAddress)" *ngIf="(filterStatus$ | async) === '' || (filterStatus$ | async) !== server.ipAddress; else pinging" class="material-icons" title="Ping server">&#xe328;</i>
                                       <ng-template #pinging>
                                       <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
                                       </ng-template>
