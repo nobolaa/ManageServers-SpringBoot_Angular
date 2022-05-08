@@ -33,6 +33,7 @@ public class ServerResource {
                 Response.builder()
                         .timestamp(now())
                         .data(Map.of("servers", serverService.list(30)))
+                        .message("Servers retrieved")
                         .status(OK)
                         .statusCode(OK.value())
                         .build()
